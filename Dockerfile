@@ -5,6 +5,7 @@ RUN apt-get update -y && \
     apt-get install ca-certificates \
       gconf-service \
       libasound2 \
+      libappindicator3-1 \
       libatk1.0-0 \
       libatk1.0-0 \
       libdbus-1-3 \
@@ -22,14 +23,14 @@ RUN apt-get update -y && \
       wget \
       curl \
       xz-utils -y --no-install-recommends && \
-    wget https://dl.google.com/linux/direct/google-chrome-unstable_current_amd64.deb && \
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
     dpkg -i google-chrome*.deb && \
     apt-get install -f && \
     apt-get clean autoclean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* google-chrome-unstable_current_amd64.deb
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* google-chrome-stable_current_amd64.deb
 
 # Install nodejs
-ENV NPM_CONFIG_LOGLEVEL=info NODE_VERSION=8.4.0
+ENV NPM_CONFIG_LOGLEVEL=info NODE_VERSION=12.4.0
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" \
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
@@ -45,3 +46,4 @@ RUN curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz
+
